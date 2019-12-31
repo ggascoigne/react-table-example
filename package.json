@@ -3,23 +3,50 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
+    "@material-ui/core": "^4.8.2",
+    "@material-ui/icons": "^4.5.1",
+    "classnames": "^2.2.6",
+    "match-sorter": "^4.0.2",
+    "namor": "^2.0.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-json-view": "^1.19.1",
+    "react-table": "^7.0.0-rc.15"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^8.0.2",
+    "@types/classnames": "^2.2.9",
+    "@types/eslint-plugin-prettier": "^2.2.0",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^13.1.2",
+    "@types/prettier": "^1.19.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-table": "^7.0.0",
+    "@types/testing-library__react": "^9.1.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "husky": "^3.1.0",
+    "import-sort-style-module": "^6.0.0",
+    "lint-staged": "^9.5.0",
+    "patch-package": "^6.2.0",
+    "prettier": "^1.19.1",
+    "prettier-plugin-import-sort": "^0.0.3",
     "react-scripts": "3.3.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "typesync": "^0.6.1"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --no-color --loglevel warn --write 'src/**/*.{js,jsx,ts,tsx,json}'",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "postinstall": "patch-package",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,6 +61,33 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "semi": false,
+    "jsxSingleQuote": true
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.{js,jsx,ts,tsx}": [
+      "prettier --no-color --write",
+      "yarn lint",
+      "git add"
+    ],
+    "*.{css,scss,graphql}": [
+      "prettier --no-color --write",
+      "git add"
     ]
   }
 }
