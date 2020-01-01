@@ -1,4 +1,4 @@
-import { Button, CssBaseline, InputLabel, TextField } from '@material-ui/core'
+import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
 import React from 'react'
 import { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
@@ -49,16 +49,16 @@ function SelectColumnFilter({
     <TextField
       select
       label={render('Header')}
-      value={filterValue}
+      value={filterValue || ''}
       onChange={e => {
         setFilter(e.target.value || undefined)
       }}
     >
-      <option value=''>All</option>
+      <MenuItem value={''}>All</MenuItem>
       {options.map((option, i) => (
-        <option key={i} value={option}>
+        <MenuItem key={i} value={option}>
           {option}
-        </option>
+        </MenuItem>
       ))}
     </TextField>
   )
