@@ -1,6 +1,6 @@
 import { TableSortLabel, TextField } from '@material-ui/core'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import cx from 'classnames'
 import React, { CSSProperties, MouseEventHandler, PropsWithChildren, ReactElement, useEffect } from 'react'
 import {
@@ -264,9 +264,13 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
                         // If it's a grouped cell, add an expander and row count
                         <>
                           <TableSortLabel
+                            classes={{
+                              iconDirectionAsc: classes.iconDirectionAsc,
+                              iconDirectionDesc: classes.iconDirectionDesc
+                            }}
                             active
-                            direction={row.isExpanded ? 'desc' : 'asc'}
-                            IconComponent={KeyboardArrowDown}
+                            direction={row.isExpanded ? 'desc': 'asc'}
+                            IconComponent={KeyboardArrowUp}
                             {...row.getExpandedToggleProps()}
                             className={classes.cellIcon}
                           />{' '}

@@ -16,7 +16,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 500,
       lineHeight: '1.5rem',
       position: 'relative',
-      borderBottom: '1px solid rgba(224, 224, 224, 1)'
+      borderBottom: '1px solid rgba(224, 224, 224, 1)',
+      '&:hover $resizeHandle': {
+        opacity: 1
+      }
     },
     tableHeadCell: {
       padding: '16px 1px 16px 16px',
@@ -26,9 +29,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.primary,
       fontWeight: 500,
       lineHeight: '1.5rem',
-      '&:hover $resizeHandle': {
-        opacity: 1
-      },
       borderRight: '1px solid rgba(224, 224, 224, 1)',
       '&:last-child': {
         borderRight: 'none'
@@ -100,8 +100,14 @@ export const useStyles = makeStyles((theme: Theme) =>
         width: 16,
         height: 16,
         marginTop: 4,
-        marginRight: 0
+        marginRight: 0,
       }
+    },
+    iconDirectionAsc: {
+      transform: 'rotate(90deg)'
+    },
+    iconDirectionDesc: {
+      transform: 'rotate(180deg)'
     },
     cellIcon: {
       '& svg': {

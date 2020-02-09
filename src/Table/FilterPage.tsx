@@ -1,19 +1,11 @@
-import { Button, Popover, Typography, createStyles, makeStyles } from '@material-ui/core'
+import { Button, Typography, createStyles, makeStyles, Popover } from '@material-ui/core'
 import React, { FormEvent, ReactElement, useCallback } from 'react'
 import { TableInstance } from 'react-table'
 
 const useStyles = makeStyles(
   createStyles({
     columnsPopOver: {
-      '& > div': {
-        padding: '24px 8px 5px 24px'
-      }
-    },
-    form: {
-      width: 484,
-      '@media (max-width: 600px)': {
-        width: 168
-      }
+      padding: 24
     },
     filtersResetButton: {
       position: 'absolute',
@@ -25,17 +17,19 @@ const useStyles = makeStyles(
       padding: '0 24px 24px 0',
       textTransform: 'uppercase'
     },
-    formGrid: {
-      display: 'inline-flex',
-      flexDirection: 'column',
-      verticalAlign: 'top',
-      flex: '1 1 calc(50% - 24px)',
-      marginRight: 24,
-      marginBottom: 24,
-      width: 218,
+    grid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 218px)',
       '@media (max-width: 600px)': {
-        width: 150
-      }
+        gridTemplateColumns: 'repeat(1, 180px)',
+      },
+      gridColumnGap: 24,
+      gridRowGap: 24,
+    },
+    cell: {
+      width: '100%',
+      display: 'inline-flex',
+      flexDirection: 'column'
     },
     hidden: {
       display: 'none'
@@ -70,7 +64,6 @@ export function FilterPage<T extends object>({ instance, anchorEl, onClose, show
     <div>
       <Popover
         anchorEl={anchorEl}
-        className={classes.columnsPopOver}
         id={'popover-filters'}
         onClose={onClose}
         open={show}
@@ -83,22 +76,26 @@ export function FilterPage<T extends object>({ instance, anchorEl, onClose, show
           horizontal: 'right'
         }}
       >
-        <Typography className={classes.popoverTitle}>Filters</Typography>
-        <form onSubmit={onSubmit} className={classes.form}>
-          <Button className={classes.filtersResetButton} color='primary' onClick={resetFilters}>
-            Reset
-          </Button>
-          {flatColumns
-            .filter(it => it.canFilter)
-            .map(column => (
-              <div key={column.id} className={classes.formGrid}>
-                {column.render('Filter')}
-              </div>
-            ))}
-          <Button className={classes.hidden} type={'submit'}>
-            &nbsp;
-          </Button>
-        </form>
+        <div className={classes.columnsPopOver}>
+          <Typography className={classes.popoverTitle}>Filters</Typography>
+          <form onSubmit={onSubmit}>
+            <Button className={classes.filtersResetButton} color='primary' onClick={resetFilters}>
+              Reset
+            </Button>
+            <div className={classes.grid}>
+              {flatColumns
+                .filter(it => it.canFilter)
+                .map(column => (
+                  <div key={column.id} className={classes.cell}>
+                    {column.render('Filter')}
+                  </div>
+                ))}
+            </div>
+            <Button className={classes.hidden} type={'submit'}>
+              &nbsp;
+            </Button>
+          </form>
+        </div>
       </Popover>
     </div>
   )

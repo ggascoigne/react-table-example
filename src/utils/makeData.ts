@@ -21,7 +21,7 @@ const newPerson = (): Person => {
   const statusChance = Math.random()
   return {
     firstName: namor.generate({ words: 1, saltLength: 0 }),
-    lastName: namor.generate({ words: 1, saltLength: 0 }),
+    lastName: namor.generate({ words: 1, saltLength: 0, subset: 'manly' }),
     age: Math.floor(Math.random() * 30),
     visits: Math.floor(Math.random() * 100),
     progress: Math.floor(Math.random() * 100),
@@ -36,7 +36,7 @@ export interface PersonData extends Person {
 export function makeData(...lens: number[]): PersonData[] {
   const makeDataLevel = (depth = 0): PersonData[] => {
     const len = lens[depth]
-    return range(len).map(d => {
+    return range(len).map(_ => {
       return {
         ...newPerson(),
         subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined

@@ -36,7 +36,7 @@ export const DumpInstance: React.FC<{
           <br />
           <br />
           <Suspense fallback={<Loader />}>
-            <ReactJson src={{ ...instance }} collapsed={1} indentWidth={2} />
+            <ReactJson src={{ ...instance }} collapsed={1} indentWidth={2} sortKeys />
           </Suspense>
         </>
       )}
