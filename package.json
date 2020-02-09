@@ -84,12 +84,10 @@
   "lint-staged": {
     "src/*.{js,jsx,ts,tsx}": [
       "prettier --no-color --write",
-      "yarn lint",
-      "git add"
+      "yarn lint"
     ],
     "*.{css,scss,graphql}": [
-      "prettier --no-color --write",
-      "git add"
+      "prettier --no-color --write"
     ]
   }
 }
