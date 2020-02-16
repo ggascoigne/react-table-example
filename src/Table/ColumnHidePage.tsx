@@ -69,6 +69,7 @@ export function ColumnHidePage<T extends object>({
             {hideableColumns.map(column => {
               return (
                 <FormControlLabel
+                  key={column.id}
                   control={<Checkbox value={`${column.id}`} disabled={column.isVisible && onlyOneOptionLeft} />}
                   label={column.render('Header')}
                   checked={column.isVisible}
