@@ -46,7 +46,7 @@ type FilterPage<T extends object> = {
 
 export function FilterPage<T extends object>({ instance, anchorEl, onClose, show }: FilterPage<T>): ReactElement {
   const classes = useStyles({})
-  const { flatColumns, setAllFilters } = instance
+  const { allColumns, setAllFilters } = instance
 
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -83,7 +83,7 @@ export function FilterPage<T extends object>({ instance, anchorEl, onClose, show
               Reset
             </Button>
             <div className={classes.grid}>
-              {flatColumns
+              {allColumns
                 .filter(it => it.canFilter)
                 .map(column => (
                   <div key={column.id} className={classes.cell}>

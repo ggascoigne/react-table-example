@@ -174,13 +174,13 @@ const columns = [
       {
         Header: 'First Name',
         accessor: 'firstName',
-        aggregate: ['sum', 'count'],
+        aggregate: 'count',
         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Names`
       },
       {
         Header: 'Last Name',
         accessor: 'lastName',
-        aggregate: ['sum', 'uniqueCount'],
+        aggregate: 'uniqueCount',
         filter: 'fuzzyText',
         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`
       }

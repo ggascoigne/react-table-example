@@ -101,7 +101,7 @@ const getStyles = <T extends object>(props: any, disableResizing = false, align 
 ]
 
 const selectionHook = (hooks: Hooks<any>) => {
-  hooks.flatColumns.push(columns => [
+  hooks.allColumns.push(columns => [
     // Let's make a column for selection
     {
       id: '_selector',
@@ -148,8 +148,8 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
 
   const hooks = [
     useColumnOrder,
-    useGroupBy,
     useFilters,
+    useGroupBy,
     useSortBy,
     useExpanded,
     useFlexLayout,
@@ -271,7 +271,7 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
                             active
                             direction={row.isExpanded ? 'desc': 'asc'}
                             IconComponent={KeyboardArrowUp}
-                            {...row.getExpandedToggleProps()}
+                            {...row.getToggleRowExpandedProps()}
                             className={classes.cellIcon}
                           />{' '}
                           {cell.render('Cell', { editable: false })} ({row.subRows.length})
@@ -280,7 +280,7 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
                         // If the cell is aggregated, use the Aggregated
                         // renderer for cell
                         cell.render('Aggregated')
-                      ) : cell.isRepeatedValue ? null : ( // For cells with repeated values, render null
+                      ) : cell.isPlaceholder ? null : ( // For cells with repeated values, render null
                         // Otherwise, just render the regular cell
                         cell.render('Cell' /*, { editable: true }*/)
                       )}

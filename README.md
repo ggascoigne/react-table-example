@@ -27,5 +27,5 @@ Several parts of this demo are pulled from examples that are available at https:
 
 ## Note
 
-This example uses a pre-released version of `react-table` that fixes `useFlexLayout`  to work with fixed width columns.  Note that this requires `patch-package` which doesn't work on `codesandbox.io`, as such, the fixed width columns don't work in that environment.
+This example uses a pre-released version of `@types/react-table` that fixes the types to support rc.16  to work with fixed width columns.  Note that this requires `patch-package` which doesn't work on `codesandbox.io`.
 

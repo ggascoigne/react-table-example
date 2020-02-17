@@ -40,8 +40,8 @@ export function ColumnHidePage<T extends object>({
   show
 }: ColumnHidePage<T>): ReactElement | null {
   const classes = useStyles({})
-  const { flatColumns, toggleHideColumn } = instance
-  const hideableColumns = flatColumns.filter(column => !(column.id === '_selector'))
+  const { allColumns, toggleHideColumn } = instance
+  const hideableColumns = allColumns.filter(column => !(column.id === '_selector'))
   const checkedCount = hideableColumns.reduce((acc, val) => acc + (val.isVisible ? 0 : 1), 0)
 
   const onlyOneOptionLeft = checkedCount + 1 >= hideableColumns.length

@@ -41,7 +41,7 @@ const getFilterValue = (column: ColumnInstance<any>, filterValue: FilterValue) =
 export function FilterChipBar<T extends object>({ instance }: FilterChipBar<T>) {
   const classes = useStyles({})
   const {
-    flatColumns,
+    allColumns,
     setFilter,
     state: { filters }
   } = instance
@@ -56,7 +56,7 @@ export function FilterChipBar<T extends object>({ instance }: FilterChipBar<T>) 
     <div className={classes.chipZone}>
       <span className={classes.filtersActiveLabel}>Active filters:</span>
       {filters &&
-        flatColumns.map(column => {
+        allColumns.map(column => {
           const filter = filters.find(f => f.id === column.id)
           const value = filter && filter.value
           return (
