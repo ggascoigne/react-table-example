@@ -1,5 +1,4 @@
 import { Checkbox, Theme, createStyles, makeStyles, styled } from '@material-ui/core'
-import cx from 'classnames'
 import React from 'react'
 
 export const useStyles = makeStyles((theme: Theme) =>
@@ -100,7 +99,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         width: 16,
         height: 16,
         marginTop: 4,
-        marginRight: 0,
+        marginRight: 0
       }
     },
     iconDirectionAsc: {
@@ -109,6 +108,13 @@ export const useStyles = makeStyles((theme: Theme) =>
     iconDirectionDesc: {
       transform: 'rotate(180deg)'
     },
+    tableBody: {
+      display: 'flex',
+      flex: '1 1 auto',
+      width: '100%',
+      flexDirection: 'column'
+    },
+    tableLabel: {},
     cellIcon: {
       '& svg': {
         width: 16,
@@ -119,84 +125,37 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const TableTable = ({ children, className, ...rest }: any) => {
-  const classes = useStyles()
-  return (
-    <div className={cx(className, classes.tableTable)} {...rest}>
-      {children}
-    </div>
-  )
-}
+const areEqual = (prevProps: any, nextProps: any) =>
+  prevProps.checked === nextProps.checked && prevProps.indeterminate === nextProps.indeterminate
 
-export const TableBody = styled('div')({
-  display: 'flex',
-  flex: '1 1 auto',
-  width: '100%',
-  flexDirection: 'column'
-})
+export const HeaderCheckbox = React.memo(
+  styled(Checkbox)({
+    fontSize: '1rem',
+    margin: '-8px 0 -8px -15px',
+    padding: '8px 9px',
+    '& svg': {
+      width: '24px',
+      height: '24px'
+    },
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
+  }),
+  areEqual
+)
 
-export const TableHead = styled('div')({})
-
-export const TableHeadRow = ({ children, className, ...rest }: any) => {
-  const classes = useStyles()
-  return (
-    <div className={cx(className, classes.tableHeadRow)} {...rest}>
-      {children}
-    </div>
-  )
-}
-
-export const TableHeadCell = ({ children, className, ...rest }: any) => {
-  const classes = useStyles()
-  return (
-    <div className={cx(className, classes.tableHeadCell)} {...rest}>
-      {children}
-    </div>
-  )
-}
-
-export const TableRow = ({ children, className, ...rest }: any) => {
-  const classes = useStyles()
-  return (
-    <div className={cx(className, classes.tableRow)} {...rest}>
-      {children}
-    </div>
-  )
-}
-
-export const TableCell = ({ children, className, ...rest }: any) => {
-  const classes = useStyles()
-  return (
-    <div className={cx(className, classes.tableCell)} {...rest}>
-      {children}
-    </div>
-  )
-}
-
-export const TableLabel = styled('div')({})
-
-export const HeaderCheckbox = styled(Checkbox)({
-  fontSize: '1rem',
-  margin: '-8px 0 -8px -15px',
-  padding: '8px 9px',
-  '& svg': {
-    width: '24px',
-    height: '24px'
-  },
-  '&:hover': {
-    backgroundColor: 'transparent'
-  }
-})
-
-export const RowCheckbox = styled(Checkbox)({
-  fontSize: '14px',
-  margin: '-9px 0 -8px -15px',
-  padding: '8px 9px 9px 9px',
-  '&:hover': {
-    backgroundColor: 'transparent'
-  },
-  '& svg': {
-    width: 24,
-    height: 24
-  }
-})
+export const RowCheckbox = React.memo(
+  styled(Checkbox)({
+    fontSize: '14px',
+    margin: '-9px 0 -8px -15px',
+    padding: '8px 9px 9px 9px',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    },
+    '& svg': {
+      width: 24,
+      height: 24
+    }
+  }),
+  areEqual
+)

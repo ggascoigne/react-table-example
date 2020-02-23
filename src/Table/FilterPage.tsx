@@ -1,4 +1,4 @@
-import { Button, Typography, createStyles, makeStyles, Popover } from '@material-ui/core'
+import { Button, Popover, Typography, createStyles, makeStyles } from '@material-ui/core'
 import React, { FormEvent, ReactElement, useCallback } from 'react'
 import { TableInstance } from 'react-table'
 
@@ -21,10 +21,10 @@ const useStyles = makeStyles(
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 218px)',
       '@media (max-width: 600px)': {
-        gridTemplateColumns: 'repeat(1, 180px)',
+        gridTemplateColumns: 'repeat(1, 180px)'
       },
       gridColumnGap: 24,
-      gridRowGap: 24,
+      gridRowGap: 24
     },
     cell: {
       width: '100%',

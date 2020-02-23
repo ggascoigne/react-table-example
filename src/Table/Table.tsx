@@ -6,7 +6,6 @@ import React, { CSSProperties, MouseEventHandler, PropsWithChildren, ReactElemen
 import {
   Cell,
   CellProps,
-  Column,
   FilterProps,
   HeaderGroup,
   HeaderProps,
@@ -33,19 +32,7 @@ import { FilterChipBar } from './FilterChipBar'
 import { fuzzyTextFilter, numericTextFilter } from './filters'
 import { ResizeHandle } from './ResizeHandle'
 import { TablePagination } from './TablePagination'
-import {
-  HeaderCheckbox,
-  RowCheckbox,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeadCell,
-  TableHeadRow,
-  TableLabel,
-  TableRow,
-  TableTable,
-  useStyles
-} from './TableStyles'
+import { HeaderCheckbox, RowCheckbox, useStyles } from './TableStyles'
 import { TableToolbar } from './TableToolbar'
 import { TooltipCell } from './TooltipCell'
 
@@ -134,45 +121,37 @@ const headerProps = <T extends object>(props: any, { column }: Meta<T, { column:
 const cellProps = <T extends object>(props: any, { cell }: Meta<T, { cell: Cell<T> }>) =>
   getStyles(props, cell.column && cell.column.disableResizing, cell.column && cell.column.align)
 
+const defaultColumn = {
+  Filter: DefaultColumnFilter,
+  Cell: TooltipCell,
+  Header: DefaultHeader,
+  // When using the useFlexLayout:
+  minWidth: 30, // minWidth is only used as a limit for resizing
+  width: 150, // width is used for both the flex-basis and flex-grow
+  maxWidth: 200 // maxWidth is only used as a limit for resizing
+}
+
+const hooks = [
+  useColumnOrder,
+  useFilters,
+  useGroupBy,
+  useSortBy,
+  useExpanded,
+  useFlexLayout,
+  usePagination,
+  useResizeColumns,
+  useRowSelect,
+  selectionHook
+]
+
+const filterTypes = {
+  fuzzyText: fuzzyTextFilter,
+  numeric: numericTextFilter
+}
+
 export function Table<T extends object>(props: PropsWithChildren<Table<T>>): ReactElement {
   const { name, columns, onAdd, onDelete, onEdit, onClick } = props
   const classes = useStyles()
-
-  const filterTypes = React.useMemo(
-    () => ({
-      fuzzyText: fuzzyTextFilter,
-      numeric: numericTextFilter
-    }),
-    []
-  )
-
-  const hooks = [
-    useColumnOrder,
-    useFilters,
-    useGroupBy,
-    useSortBy,
-    useExpanded,
-    useFlexLayout,
-    usePagination,
-    useResizeColumns,
-    useRowSelect,
-    selectionHook
-  ]
-
-  const defaultColumn = React.useMemo<Partial<Column<T>>>(
-    () => ({
-      // disableFilter: true,
-      // disableGroupBy: true,
-      Filter: DefaultColumnFilter,
-      Cell: TooltipCell,
-      Header: DefaultHeader,
-      // When using the useFlexLayout:
-      minWidth: 30, // minWidth is only used as a limit for resizing
-      width: 150, // width is used for both the flex-basis and flex-grow
-      maxWidth: 200 // maxWidth is only used as a limit for resizing
-    }),
-    []
-  )
 
   const [initialState, setInitialState] = useLocalStorage(`tableState:${name}`, {})
   const instance = useTable<T>(
@@ -209,59 +188,60 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
     <>
       <TableToolbar instance={instance} {...{ onAdd, onDelete, onEdit }} />
       <FilterChipBar<T> instance={instance} />
-      <TableTable {...getTableProps()}>
-        <TableHead>
+      <div className={classes.tableTable} {...getTableProps()}>
+        <div>
           {headerGroups.map(headerGroup => (
-            <TableHeadRow {...headerGroup.getHeaderGroupProps()}>
+            <div {...headerGroup.getHeaderGroupProps()} className={classes.tableHeadRow}>
               {headerGroup.headers.map(column => {
                 const style = {
                   textAlign: column.align ? column.align : 'left '
                 } as CSSProperties
                 return (
-                  <TableHeadCell {...column.getHeaderProps(headerProps)}>
-                    <div>
-                      {column.canGroupBy ? (
-                        // If the column can be grouped, let's add a toggle
-                        <TableSortLabel
-                          active
-                          direction={column.isGrouped ? 'desc' : 'asc'}
-                          IconComponent={KeyboardArrowRight}
-                          {...column.getGroupByToggleProps()}
-                          className={classes.headerIcon}
-                        />
-                      ) : null}
-                      {column.canSort ? (
-                        <TableSortLabel
-                          active={column.isSorted}
-                          direction={column.isSortedDesc ? 'desc' : 'asc'}
-                          {...column.getSortByToggleProps()}
-                          className={classes.tableSortLabel}
-                          style={style}
-                        >
-                          {column.render('Header')}
-                        </TableSortLabel>
-                      ) : (
-                        <TableLabel style={style}>{column.render('Header')}</TableLabel>
-                      )}
-                      {/*<div>{column.canFilter ? column.render('Filter') : null}</div>*/}
-                    </div>
+                  <div {...column.getHeaderProps(headerProps)} className={classes.tableHeadCell}>
+                    {column.canGroupBy && (
+                      <TableSortLabel
+                        active
+                        direction={column.isGrouped ? 'desc' : 'asc'}
+                        IconComponent={KeyboardArrowRight}
+                        {...column.getGroupByToggleProps()}
+                        className={classes.headerIcon}
+                      />
+                    )}
+                    {column.canSort ? (
+                      <TableSortLabel
+                        active={column.isSorted}
+                        direction={column.isSortedDesc ? 'desc' : 'asc'}
+                        {...column.getSortByToggleProps()}
+                        className={classes.tableSortLabel}
+                        style={style}
+                      >
+                        {column.render('Header')}
+                      </TableSortLabel>
+                    ) : (
+                      <div style={style} className={classes.tableLabel}>
+                        {column.render('Header')}
+                      </div>
+                    )}
                     {column.canResize && <ResizeHandle column={column} />}
-                  </TableHeadCell>
+                  </div>
                 )
               })}
-            </TableHeadRow>
+            </div>
           ))}
-        </TableHead>
-        <TableBody {...getTableBodyProps()}>
+        </div>
+        <div {...getTableBodyProps()} className={classes.tableBody}>
           {page.map(row => {
             prepareRow(row)
             return (
-              <TableRow {...row.getRowProps()} className={cx({ rowSelected: row.isSelected })}>
+              <div {...row.getRowProps()} className={cx(classes.tableRow, { rowSelected: row.isSelected })}>
                 {row.cells.map(cell => {
                   return (
-                    <TableCell {...cell.getCellProps(cellProps)} onClick={cellClickHandler(cell)}>
+                    <div
+                      {...cell.getCellProps(cellProps)}
+                      onClick={cellClickHandler(cell)}
+                      className={classes.tableCell}
+                    >
                       {cell.isGrouped ? (
-                        // If it's a grouped cell, add an expander and row count
                         <>
                           <TableSortLabel
                             classes={{
@@ -269,29 +249,26 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
                               iconDirectionDesc: classes.iconDirectionDesc
                             }}
                             active
-                            direction={row.isExpanded ? 'desc': 'asc'}
+                            direction={row.isExpanded ? 'desc' : 'asc'}
                             IconComponent={KeyboardArrowUp}
                             {...row.getToggleRowExpandedProps()}
                             className={classes.cellIcon}
                           />{' '}
-                          {cell.render('Cell', { editable: false })} ({row.subRows.length})
+                          {cell.render('Cell')} ({row.subRows.length})
                         </>
                       ) : cell.isAggregated ? (
-                        // If the cell is aggregated, use the Aggregated
-                        // renderer for cell
                         cell.render('Aggregated')
-                      ) : cell.isPlaceholder ? null : ( // For cells with repeated values, render null
-                        // Otherwise, just render the regular cell
-                        cell.render('Cell' /*, { editable: true }*/)
+                      ) : cell.isPlaceholder ? null : (
+                        cell.render('Cell')
                       )}
-                    </TableCell>
+                    </div>
                   )
                 })}
-              </TableRow>
+              </div>
             )
           })}
-        </TableBody>
-      </TableTable>
+        </div>
+      </div>
       <TablePagination<T> instance={instance} />
       <DumpInstance enabled instance={instance} />
     </>

@@ -1,6 +1,20 @@
-import { TablePagination as MuiTablePagination } from '@material-ui/core'
+import { TablePagination as _MuiTablePagination } from '@material-ui/core'
 import React, { PropsWithChildren, ReactElement, useCallback } from 'react'
 import { TableInstance } from 'react-table'
+
+const rowsPerPageOptions = [5, 10, 25, 50]
+
+// avoid all of the redraws caused by the internal withStyles
+const interestingPropsEqual = (prevProps: any, nextProps: any) =>
+  prevProps.count === nextProps.count &&
+  prevProps.rowsPerPage === nextProps.rowsPerPage &&
+  prevProps.page === nextProps.page &&
+  prevProps.onChangePage === nextProps.onChangePage &&
+  prevProps.onChangeRows === nextProps.onChangeRows
+
+// a bit of a type hack to keep OverridableComponent working as desired
+type T = typeof _MuiTablePagination
+const MuiTablePagination: T = React.memo(_MuiTablePagination, interestingPropsEqual) as T
 
 export function TablePagination<T extends object>({
   instance
@@ -26,17 +40,22 @@ export function TablePagination<T extends object>({
     [gotoPage, nextPage, pageIndex, previousPage]
   )
 
+  const onChangeRowsPerPage = useCallback(
+    e => {
+      setPageSize(Number(e.target.value))
+    },
+    [setPageSize]
+  )
+
   return rowCount ? (
     <MuiTablePagination
-      rowsPerPageOptions={[5, 10, 25, 50]}
+      rowsPerPageOptions={rowsPerPageOptions}
       component='div'
       count={rowCount}
       rowsPerPage={pageSize}
       page={pageIndex}
       onChangePage={handleChangePage}
-      onChangeRowsPerPage={e => {
-        setPageSize(Number(e.target.value))
-      }}
+      onChangeRowsPerPage={onChangeRowsPerPage}
     />
   ) : null
 }

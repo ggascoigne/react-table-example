@@ -1,5 +1,5 @@
 import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
 import { Page } from './Page'
@@ -233,10 +233,19 @@ const columns = [
 const App: React.FC = () => {
   const [data] = React.useState<PersonData[]>(() => makeData(100))
 
+  const dummy = useCallback(() => () => null, [])
+
   return (
     <Page>
       <CssBaseline />
-      <Table<PersonData> name={'testTable'} columns={columns} data={data} />
+      <Table<PersonData>
+        name={'testTable'}
+        columns={columns}
+        data={data}
+        onAdd={dummy}
+        onEdit={dummy}
+        onDelete={dummy}
+      />
     </Page>
   )
 }
