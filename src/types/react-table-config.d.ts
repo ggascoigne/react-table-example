@@ -41,7 +41,7 @@ import {
   UseSortByHooks,
   UseSortByInstanceProps,
   UseSortByOptions,
-  UseSortByState
+  UseSortByState,
 } from 'react-table'
 
 declare module 'react-table' {
@@ -95,7 +95,7 @@ declare module 'react-table' {
     rowCount: number
   }
 
-  export interface Column<D extends object = {}>
+  export interface ColumnInterface<D extends object = {}>
     extends UseFiltersColumnOptions<D>,
       UseGroupByColumnOptions<D>,
       UseResizeColumnsColumnOptions<D>,

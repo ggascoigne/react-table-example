@@ -7,20 +7,20 @@ const useStyles = makeStyles(
     filtersActiveLabel: {
       color: '#998',
       fontSize: '14px',
-      paddingRight: 10
+      paddingRight: 10,
     },
     chipZone: {
       padding: '18px 0 5px 10px',
-      width: '100%'
+      width: '100%',
     },
     chipLabel: {
       fontWeight: 500,
-      marginRight: 5
+      marginRight: 5,
     },
     filterChip: {
       marginRight: 4,
-      color: '#222'
-    }
+      color: '#222',
+    },
   })
 )
 
@@ -43,7 +43,7 @@ export function FilterChipBar<T extends object>({ instance }: FilterChipBar<T>) 
   const {
     allColumns,
     setFilter,
-    state: { filters }
+    state: { filters },
   } = instance
   const handleDelete = useCallback(
     (id: string | number) => {
@@ -56,8 +56,8 @@ export function FilterChipBar<T extends object>({ instance }: FilterChipBar<T>) 
     <div className={classes.chipZone}>
       <span className={classes.filtersActiveLabel}>Active filters:</span>
       {filters &&
-        allColumns.map(column => {
-          const filter = filters.find(f => f.id === column.id)
+        allColumns.map((column) => {
+          const filter = filters.find((f) => f.id === column.id)
           const value = filter && filter.value
           return (
             value && (

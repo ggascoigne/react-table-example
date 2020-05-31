@@ -29,7 +29,7 @@ function camelToSnake(str: string) {
 
 function snakeToCamel(str: string) {
   const parts = str.split('_')
-  return parts.reduce(function(p, c) {
+  return parts.reduce(function (p, c) {
     return p + c.charAt(0).toUpperCase() + c.slice(1)
   }, parts.shift()!)
 }

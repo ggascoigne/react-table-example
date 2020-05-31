@@ -10,21 +10,21 @@ const interestingPropsEqual = (prevProps: any, nextProps: any) =>
   prevProps.rowsPerPage === nextProps.rowsPerPage &&
   prevProps.page === nextProps.page &&
   prevProps.onChangePage === nextProps.onChangePage &&
-  prevProps.onChangeRows === nextProps.onChangeRows
+  prevProps.onChangeRowsPerPage === nextProps.onChangeRowsPerPage
 
 // a bit of a type hack to keep OverridableComponent working as desired
 type T = typeof _MuiTablePagination
 const MuiTablePagination: T = React.memo(_MuiTablePagination, interestingPropsEqual) as T
 
 export function TablePagination<T extends object>({
-  instance
+  instance,
 }: PropsWithChildren<{ instance: TableInstance<T> }>): ReactElement | null {
   const {
     state: { pageIndex, pageSize, rowCount = instance.rows.length },
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize
+    setPageSize,
   } = instance
 
   const handleChangePage = useCallback(
@@ -41,7 +41,7 @@ export function TablePagination<T extends object>({
   )
 
   const onChangeRowsPerPage = useCallback(
-    e => {
+    (e) => {
       setPageSize(Number(e.target.value))
     },
     [setPageSize]

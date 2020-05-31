@@ -6,8 +6,8 @@ const useStyles = makeStyles({
   truncated: {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    whiteSpace: 'nowrap'
-  }
+    whiteSpace: 'nowrap',
+  },
 })
 
 export const TooltipCell: React.FC<CellProps<any>> = ({ cell: { value }, column: { align = 'left' } }) => (

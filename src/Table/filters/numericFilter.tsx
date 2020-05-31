@@ -28,7 +28,7 @@ function parseValue(filterValue: FilterValue) {
 
 export function numericTextFilter<T extends object>(rows: Array<Row<T>>, id: IdType<T>, filterValue: FilterValue) {
   const comparator = parseValue(filterValue)
-  return rows.filter(row => comparator(row.values[id[0]]))
+  return rows.filter((row) => comparator(row.values[id[0]]))
 }
 
 // Let the table remove the filter if the string is empty

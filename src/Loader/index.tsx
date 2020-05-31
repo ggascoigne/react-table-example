@@ -10,11 +10,11 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignContent: 'center',
       alignItems: 'center',
-      flex: '1 0 auto'
+      flex: '1 0 auto',
     },
     progress: {
-      margin: theme.spacing(2)
-    }
+      margin: theme.spacing(2),
+    },
   })
 )
 

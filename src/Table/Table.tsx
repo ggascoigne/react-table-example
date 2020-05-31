@@ -23,7 +23,7 @@ import {
   useResizeColumns,
   useRowSelect,
   useSortBy,
-  useTable
+  useTable,
 } from 'react-table'
 
 import { camelToWords, useDebounce, useLocalStorage } from '../utils'
@@ -49,7 +49,7 @@ const DefaultHeader: React.FC<HeaderProps<any>> = ({ column }) => (
 )
 
 function DefaultColumnFilter<T extends object>({
-  column: { id, index, filterValue, setFilter, render, parent }
+  column: { id, index, filterValue, setFilter, render, parent },
 }: FilterProps<T>) {
   const [value, setValue] = React.useState(filterValue || '')
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +69,7 @@ function DefaultColumnFilter<T extends object>({
       autoFocus={index === 0 && firstIndex}
       variant={'standard'}
       onChange={handleChange}
-      onBlur={e => {
+      onBlur={(e) => {
         setFilter(e.target.value || undefined)
       }}
     />
@@ -82,13 +82,13 @@ const getStyles = <T extends object>(props: any, disableResizing = false, align 
     style: {
       justifyContent: align === 'right' ? 'flex-end' : 'flex-start',
       alignItems: 'flex-start',
-      display: 'flex'
-    }
-  }
+      display: 'flex',
+    },
+  },
 ]
 
 const selectionHook = (hooks: Hooks<any>) => {
-  hooks.allColumns.push(columns => [
+  hooks.allColumns.push((columns) => [
     // Let's make a column for selection
     {
       id: '_selector',
@@ -104,9 +104,9 @@ const selectionHook = (hooks: Hooks<any>) => {
       ),
       // The cell can use the individual row's getToggleRowSelectedProps method
       // to the render a checkbox
-      Cell: ({ row }: CellProps<any>) => <RowCheckbox {...row.getToggleRowSelectedProps()} />
+      Cell: ({ row }: CellProps<any>) => <RowCheckbox {...row.getToggleRowSelectedProps()} />,
     },
-    ...columns
+    ...columns,
   ])
   hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
     // fix the parent group of the selection button to not be resizable
@@ -128,7 +128,7 @@ const defaultColumn = {
   // When using the useFlexLayout:
   minWidth: 30, // minWidth is only used as a limit for resizing
   width: 150, // width is used for both the flex-basis and flex-grow
-  maxWidth: 200 // maxWidth is only used as a limit for resizing
+  maxWidth: 200, // maxWidth is only used as a limit for resizing
 }
 
 const hooks = [
@@ -141,12 +141,12 @@ const hooks = [
   usePagination,
   useResizeColumns,
   useRowSelect,
-  selectionHook
+  selectionHook,
 ]
 
 const filterTypes = {
   fuzzyText: fuzzyTextFilter,
-  numeric: numericTextFilter
+  numeric: numericTextFilter,
 }
 
 export function Table<T extends object>(props: PropsWithChildren<Table<T>>): ReactElement {
@@ -160,7 +160,7 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
       columns,
       filterTypes,
       defaultColumn,
-      initialState
+      initialState,
     },
     ...hooks
   )
@@ -175,7 +175,7 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
       filters,
       pageSize,
       columnResizing,
-      hiddenColumns
+      hiddenColumns,
     }
     setInitialState(val)
   }, [setInitialState, debouncedState])
@@ -190,11 +190,11 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
       <FilterChipBar<T> instance={instance} />
       <div className={classes.tableTable} {...getTableProps()}>
         <div>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className={classes.tableHeadRow}>
-              {headerGroup.headers.map(column => {
+              {headerGroup.headers.map((column) => {
                 const style = {
-                  textAlign: column.align ? column.align : 'left '
+                  textAlign: column.align ? column.align : 'left ',
                 } as CSSProperties
                 return (
                   <div {...column.getHeaderProps(headerProps)} className={classes.tableHeadCell}>
@@ -230,11 +230,11 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
           ))}
         </div>
         <div {...getTableBodyProps()} className={classes.tableBody}>
-          {page.map(row => {
+          {page.map((row) => {
             prepareRow(row)
             return (
               <div {...row.getRowProps()} className={cx(classes.tableRow, { rowSelected: row.isSelected })}>
-                {row.cells.map(cell => {
+                {row.cells.map((cell) => {
                   return (
                     <div
                       {...cell.getCellProps(cellProps)}
@@ -246,7 +246,7 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
                           <TableSortLabel
                             classes={{
                               iconDirectionAsc: classes.iconDirectionAsc,
-                              iconDirectionDesc: classes.iconDirectionDesc
+                              iconDirectionDesc: classes.iconDirectionDesc,
                             }}
                             active
                             direction={row.isExpanded ? 'desc' : 'asc'}

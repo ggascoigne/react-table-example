@@ -5,22 +5,22 @@ import { TableInstance } from 'react-table'
 const useStyles = makeStyles(
   createStyles({
     columnsPopOver: {
-      padding: 24
+      padding: 24,
     },
     popoverTitle: {
       fontWeight: 500,
       padding: '0 24px 24px 0',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     grid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 198px)',
       '@media (max-width: 600px)': {
-        gridTemplateColumns: 'repeat(1, 160px)'
+        gridTemplateColumns: 'repeat(1, 160px)',
       },
       gridColumnGap: 6,
-      gridRowGap: 6
-    }
+      gridRowGap: 6,
+    },
   })
 )
 
@@ -37,11 +37,11 @@ export function ColumnHidePage<T extends object>({
   instance,
   anchorEl,
   onClose,
-  show
+  show,
 }: ColumnHidePage<T>): ReactElement | null {
   const classes = useStyles({})
   const { allColumns, toggleHideColumn } = instance
-  const hideableColumns = allColumns.filter(column => !(column.id === '_selector'))
+  const hideableColumns = allColumns.filter((column) => !(column.id === '_selector'))
   const checkedCount = hideableColumns.reduce((acc, val) => acc + (val.isVisible ? 0 : 1), 0)
 
   const onlyOneOptionLeft = checkedCount + 1 >= hideableColumns.length
@@ -56,17 +56,17 @@ export function ColumnHidePage<T extends object>({
         open={show}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
       >
         <div className={classes.columnsPopOver}>
           <Typography className={classes.popoverTitle}>Visible Columns</Typography>
           <div className={classes.grid}>
-            {hideableColumns.map(column => {
+            {hideableColumns.map((column) => {
               return (
                 <FormControlLabel
                   key={column.id}

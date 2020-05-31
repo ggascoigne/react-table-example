@@ -13,7 +13,7 @@ function roundedMedian(values: any[]) {
   let min = values[0] || ''
   let max = values[0] || ''
 
-  values.forEach(value => {
+  values.forEach((value) => {
     min = Math.min(min, value)
     max = Math.max(max, value)
   })
@@ -22,7 +22,7 @@ function roundedMedian(values: any[]) {
 }
 
 function filterGreaterThan(rows: Array<Row<any>>, id: Array<IdType<any>>, filterValue: FilterValue) {
-  return rows.filter(row => {
+  return rows.filter((row) => {
     const rowValue = row.values[id[0]]
     return rowValue >= filterValue
   })
@@ -35,11 +35,11 @@ function filterGreaterThan(rows: Array<Row<any>>, id: Array<IdType<any>>, filter
 filterGreaterThan.autoRemove = (val: any) => typeof val !== 'number'
 
 function SelectColumnFilter({
-  column: { filterValue, render, setFilter, preFilteredRows, id }
+  column: { filterValue, render, setFilter, preFilteredRows, id },
 }: FilterProps<PersonData>) {
   const options = React.useMemo(() => {
     const options = new Set<any>()
-    preFilteredRows.forEach(row => {
+    preFilteredRows.forEach((row) => {
       options.add(row.values[id])
     })
     return [...Array.from(options.values())]
@@ -50,7 +50,7 @@ function SelectColumnFilter({
       select
       label={render('Header')}
       value={filterValue || ''}
-      onChange={e => {
+      onChange={(e) => {
         setFilter(e.target.value || undefined)
       }}
     >
@@ -67,7 +67,7 @@ function SelectColumnFilter({
 const getMinMax = (rows: Row<PersonData>[], id: IdType<PersonData>) => {
   let min = rows.length ? rows[0].values[id] : 0
   let max = rows.length ? rows[0].values[id] : 0
-  rows.forEach(row => {
+  rows.forEach((row) => {
     min = Math.min(row.values[id], min)
     max = Math.max(row.values[id], max)
   })
@@ -75,7 +75,7 @@ const getMinMax = (rows: Row<PersonData>[], id: IdType<PersonData>) => {
 }
 
 function SliderColumnFilter({
-  column: { render, filterValue, setFilter, preFilteredRows, id }
+  column: { render, filterValue, setFilter, preFilteredRows, id },
 }: FilterProps<PersonData>) {
   const [min, max] = React.useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
 
@@ -87,10 +87,10 @@ function SliderColumnFilter({
         type='range'
         inputProps={{
           min,
-          max
+          max,
         }}
         value={filterValue || min}
-        onChange={e => {
+        onChange={(e) => {
           setFilter(parseInt(e.target.value, 10))
         }}
       />
@@ -122,7 +122,7 @@ const useActiveElement = () => {
 // filter. It uses two number boxes and filters rows to
 // ones that have values between the two
 function NumberRangeColumnFilter({
-  column: { filterValue = [], render, preFilteredRows, setFilter, id }
+  column: { filterValue = [], render, preFilteredRows, setFilter, id },
 }: FilterProps<PersonData>) {
   const [min, max] = React.useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
   const focusedElement = useActiveElement()
@@ -137,14 +137,14 @@ function NumberRangeColumnFilter({
           id={`${id}_1`}
           value={filterValue[0] || ''}
           type='number'
-          onChange={e => {
+          onChange={(e) => {
             const val = e.target.value
             setFilter((old: any[] = []) => [val ? parseInt(val, 10) : undefined, old[1]])
           }}
           placeholder={`Min (${min})`}
           style={{
             width: '70px',
-            marginRight: '0.5rem'
+            marginRight: '0.5rem',
           }}
         />
         to
@@ -152,14 +152,14 @@ function NumberRangeColumnFilter({
           id={`${id}_2`}
           value={filterValue[1] || ''}
           type='number'
-          onChange={e => {
+          onChange={(e) => {
             const val = e.target.value
             setFilter((old: any[] = []) => [old[0], val ? parseInt(val, 10) : undefined])
           }}
           placeholder={`Max (${max})`}
           style={{
             width: '70px',
-            marginLeft: '0.5rem'
+            marginLeft: '0.5rem',
           }}
         />
       </div>
@@ -175,16 +175,16 @@ const columns = [
         Header: 'First Name',
         accessor: 'firstName',
         aggregate: 'count',
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Names`
+        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Names`,
       },
       {
         Header: 'Last Name',
         accessor: 'lastName',
         aggregate: 'uniqueCount',
         filter: 'fuzzyText',
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`
-      }
-    ]
+        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
+      },
+    ],
   },
   {
     Header: 'Info',
@@ -199,7 +199,7 @@ const columns = [
         filter: 'equals',
         aggregate: 'average',
         disableGroupBy: true,
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (avg)`
+        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (avg)`,
       },
       {
         Header: 'Visits',
@@ -210,13 +210,13 @@ const columns = [
         Filter: NumberRangeColumnFilter,
         filter: 'between',
         aggregate: 'sum',
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (total)`
+        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (total)`,
       },
       {
         Header: 'Status',
         accessor: 'status',
         Filter: SelectColumnFilter,
-        filter: 'includes'
+        filter: 'includes',
       },
       {
         Header: 'Profile Progress',
@@ -224,10 +224,10 @@ const columns = [
         Filter: SliderColumnFilter,
         filter: filterGreaterThan,
         aggregate: roundedMedian,
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (med)`
-      }
-    ]
-  }
+        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (med)`,
+      },
+    ],
+  },
 ] //.flatMap((c:any)=>c.columns) // remove comment to drop header groups
 
 const App: React.FC = () => {

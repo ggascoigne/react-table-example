@@ -5,35 +5,35 @@ import { TableInstance } from 'react-table'
 const useStyles = makeStyles(
   createStyles({
     columnsPopOver: {
-      padding: 24
+      padding: 24,
     },
     filtersResetButton: {
       position: 'absolute',
       top: 18,
-      right: 21
+      right: 21,
     },
     popoverTitle: {
       fontWeight: 500,
       padding: '0 24px 24px 0',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     grid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 218px)',
       '@media (max-width: 600px)': {
-        gridTemplateColumns: 'repeat(1, 180px)'
+        gridTemplateColumns: 'repeat(1, 180px)',
       },
       gridColumnGap: 24,
-      gridRowGap: 24
+      gridRowGap: 24,
     },
     cell: {
       width: '100%',
       display: 'inline-flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
     },
     hidden: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   })
 )
 
@@ -69,11 +69,11 @@ export function FilterPage<T extends object>({ instance, anchorEl, onClose, show
         open={show}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
       >
         <div className={classes.columnsPopOver}>
@@ -84,8 +84,8 @@ export function FilterPage<T extends object>({ instance, anchorEl, onClose, show
             </Button>
             <div className={classes.grid}>
               {allColumns
-                .filter(it => it.canFilter)
-                .map(column => (
+                .filter((it) => it.canFilter)
+                .map((column) => (
                   <div key={column.id} className={classes.cell}>
                     {column.render('Filter')}
                   </div>

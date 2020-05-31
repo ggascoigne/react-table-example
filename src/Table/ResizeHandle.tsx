@@ -12,7 +12,7 @@ export const ResizeHandle = <T extends {}>({ column }: { column: ColumnInstance<
       style={{ cursor: 'col-resize' }} // override the useResizeColumns default
       className={cx({
         [classes.resizeHandle]: true,
-        handleActive: column.isResizing
+        handleActive: column.isResizing,
       })}
     />
   )

@@ -10,8 +10,8 @@ const useStyles = makeStyles(
   createStyles({
     button: {
       marginTop: -72,
-      marginLeft: 0
-    }
+      marginLeft: 0,
+    },
   })
 )
 
@@ -26,7 +26,7 @@ export const DumpInstance: React.FC<{
     <>
       <Tooltip title={'Debug'}>
         <span>
-          <IconButton className={classes.button} onClick={() => setOpen(old => !old)}>
+          <IconButton className={classes.button} onClick={() => setOpen((old) => !old)}>
             <BugReportTwoToneIcon />
           </IconButton>
         </span>
