@@ -1,4 +1,6 @@
-import { Button, IconButton, Theme, Toolbar, Tooltip, createStyles, makeStyles } from '@material-ui/core'
+import type { Theme } from '@material-ui/core'
+
+import { Button, IconButton, Toolbar, Tooltip, createStyles, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/CreateOutlined'
 import DeleteIcon from '@material-ui/icons/DeleteOutline'
@@ -6,11 +8,12 @@ import FilterListIcon from '@material-ui/icons/FilterList'
 import ViewColumnsIcon from '@material-ui/icons/ViewColumn'
 import classnames from 'classnames'
 import React, { MouseEvent, MouseEventHandler, PropsWithChildren, ReactElement, useCallback, useState } from 'react'
-import { TableInstance } from 'react-table'
 
-import { TableMouseEventHandler } from '../types/react-table-config'
 import { ColumnHidePage } from './ColumnHidePage'
 import { FilterPage } from './FilterPage'
+import type { TableInstance } from 'react-table'
+
+import type { TableMouseEventHandler } from '../../types/react-table-config'
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,7 +99,10 @@ export const InstanceSmallIconActionButton = <T extends object>({
     <Tooltip title={label} aria-label={label}>
       <span>
         <IconButton
-          className={classnames({ [classes.rightIcons]: variant === 'right', [classes.leftIcons]: variant === 'left' })}
+          className={classnames({
+            [classes.rightIcons]: variant === 'right',
+            [classes.leftIcons]: variant === 'left',
+          })}
           onClick={onClick(instance)}
           disabled={!enabled(instance)}
         >
@@ -119,7 +125,10 @@ export const SmallIconActionButton = <T extends object>({
     <Tooltip title={label} aria-label={label}>
       <span>
         <IconButton
-          className={classnames({ [classes.rightIcons]: variant === 'right', [classes.leftIcons]: variant === 'left' })}
+          className={classnames({
+            [classes.rightIcons]: variant === 'right',
+            [classes.leftIcons]: variant === 'left',
+          })}
           onClick={onClick}
           disabled={!enabled}
         >

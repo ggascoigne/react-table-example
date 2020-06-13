@@ -1,6 +1,6 @@
 import { Button, Popover, Typography, createStyles, makeStyles } from '@material-ui/core'
 import React, { FormEvent, ReactElement, useCallback } from 'react'
-import { TableInstance } from 'react-table'
+import type { TableInstance } from 'react-table'
 
 const useStyles = makeStyles(
   createStyles({

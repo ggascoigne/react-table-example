@@ -1,6 +1,6 @@
 import { Chip, createStyles, makeStyles } from '@material-ui/core'
 import React, { useCallback } from 'react'
-import { ColumnInstance, FilterValue, IdType, TableInstance } from 'react-table'
+import type { ColumnInstance, FilterValue, IdType, TableInstance } from 'react-table'
 
 const useStyles = makeStyles(
   createStyles({

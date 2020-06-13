@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel, Popover, Typography, createStyles, makeStyles } from '@material-ui/core'
 import React, { ReactElement } from 'react'
-import { TableInstance } from 'react-table'
+import type { TableInstance } from 'react-table'
 
 const useStyles = makeStyles(
   createStyles({

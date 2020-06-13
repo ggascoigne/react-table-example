@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import React, { CSSProperties } from 'react'
-import { CellProps } from 'react-table'
+import type { CellProps } from 'react-table'
 
 const useStyles = makeStyles({
   truncated: {

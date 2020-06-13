@@ -1,4 +1,4 @@
-import { FilterValue, IdType, Row } from 'react-table'
+import type { FilterValue, IdType, Row } from 'react-table'
 
 const regex = /([=<>!]*)\s*((?:[0-9].?[0-9]*)+)/
 

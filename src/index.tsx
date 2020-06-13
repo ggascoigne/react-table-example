@@ -1,12 +1,19 @@
+import './index.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 import App from './App'
 
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React)
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
 
-ReactDOM.render(<App />, document.getElementById('root'))
+// Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
+// Learn more: https://www.snowpack.dev/#hot-module-replacement
+// if (import.meta.hot) {
+//   import.meta.hot.accept();
+// }

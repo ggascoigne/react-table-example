@@ -233,7 +233,12 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
           {page.map((row) => {
             prepareRow(row)
             return (
-              <div {...row.getRowProps()} className={cx(classes.tableRow, { rowSelected: row.isSelected })}>
+              <div
+                {...row.getRowProps()}
+                className={cx(classes.tableRow, {
+                  rowSelected: row.isSelected,
+                })}
+              >
                 {row.cells.map((cell) => {
                   return (
                     <div

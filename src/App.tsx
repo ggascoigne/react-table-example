@@ -1,10 +1,11 @@
 import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
 import React, { useCallback } from 'react'
-import { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
 import { Page } from './Page'
 import { Table } from './Table'
 import { PersonData, makeData } from './utils'
+
+import type { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
 // This is a custom aggregator that
 // takes in an array of values and
@@ -80,7 +81,13 @@ function SliderColumnFilter({
   const [min, max] = React.useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'baseline',
+      }}
+    >
       <TextField
         name={id}
         label={render('Header')}
@@ -132,7 +139,14 @@ function NumberRangeColumnFilter({
       <InputLabel htmlFor={id} shrink focused={!!hasFocus}>
         {render('Header')}
       </InputLabel>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingTop: 5 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          paddingTop: 5,
+        }}
+      >
         <TextField
           id={`${id}_1`}
           value={filterValue[0] || ''}

@@ -1,4 +1,4 @@
-import namor from 'namor'
+import namor from '@ggascoigne/namor'
 
 export type Person = {
   firstName: string
