@@ -1,6 +1,6 @@
 import { TablePagination as _MuiTablePagination } from '@material-ui/core'
 import React, { PropsWithChildren, ReactElement, useCallback } from 'react'
-import type { TableInstance } from 'react-table'
+import { TableInstance } from 'react-table'
 
 const rowsPerPageOptions = [5, 10, 25, 50]
 

@@ -1,6 +1,6 @@
 import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
 import React, { useCallback } from 'react'
-import type { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
+import { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
 import { Page } from './Page'
 import { Table } from './Table'

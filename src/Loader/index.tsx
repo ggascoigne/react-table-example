@@ -1,4 +1,4 @@
-import type { Theme } from '@material-ui/core'
+import { Theme } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import React from 'react'
