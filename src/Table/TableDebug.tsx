@@ -1,5 +1,6 @@
 import { IconButton, Tooltip, createStyles, makeStyles } from '@material-ui/core'
 import BugReportTwoToneIcon from '@material-ui/icons/BugReportTwoTone'
+import classnames from 'classnames'
 import React, { Suspense, useState } from 'react'
 
 import { Loader } from '../Loader'
@@ -15,7 +16,7 @@ const useStyles = makeStyles(
   })
 )
 
-export const DumpInstance: React.FC<{
+export const TableDebug: React.FC<{
   enabled: boolean
   instance: any
 }> = ({ enabled, instance }) => {
@@ -26,7 +27,10 @@ export const DumpInstance: React.FC<{
     <>
       <Tooltip title={'Debug'}>
         <span>
-          <IconButton className={classes.button} onClick={() => setOpen((old) => !old)}>
+          <IconButton
+            className={classnames({ [classes.button]: instance?.rows?.length })}
+            onClick={() => setOpen((old) => !old)}
+          >
             <BugReportTwoToneIcon />
           </IconButton>
         </span>

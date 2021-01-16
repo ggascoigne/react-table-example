@@ -29,19 +29,17 @@ const newPerson = (): Person => {
   }
 }
 
-export interface PersonData extends Person {
+export type PersonData = Person & {
   subRows?: PersonData[]
 }
 
 export function makeData(...lens: number[]): PersonData[] {
   const makeDataLevel = (depth = 0): PersonData[] => {
     const len = lens[depth]
-    return range(len).map((_) => {
-      return {
-        ...newPerson(),
-        subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
-      }
-    })
+    return range(len).map(() => ({
+      ...newPerson(),
+      subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
+    }))
   }
 
   return makeDataLevel()

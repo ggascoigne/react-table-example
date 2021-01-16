@@ -1,5 +1,5 @@
 import { Chip, createStyles, makeStyles } from '@material-ui/core'
-import React, { useCallback } from 'react'
+import React, { ReactElement, useCallback } from 'react'
 import type { ColumnInstance, FilterValue, IdType, TableInstance } from 'react-table'
 
 const useStyles = makeStyles(
@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   })
 )
 
-type FilterChipBar<T extends object> = {
+type FilterChipBarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>
 }
 
@@ -38,7 +38,9 @@ const getFilterValue = (column: ColumnInstance<any>, filterValue: FilterValue) =
   return filterValue
 }
 
-export function FilterChipBar<T extends object>({ instance }: FilterChipBar<T>) {
+export function FilterChipBar<T extends Record<string, unknown>>({
+  instance,
+}: FilterChipBarProps<T>): ReactElement | null {
   const classes = useStyles({})
   const {
     allColumns,

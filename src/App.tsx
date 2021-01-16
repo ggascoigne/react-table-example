@@ -1,11 +1,10 @@
 import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
 import React, { useCallback } from 'react'
+import type { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
 import { Page } from './Page'
 import { Table } from './Table'
 import { PersonData, makeData } from './utils'
-
-import type { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
 
 // This is a custom aggregator that
 // takes in an array of values and
@@ -213,6 +212,8 @@ const columns = [
         filter: 'equals',
         aggregate: 'average',
         disableGroupBy: true,
+        defaultCanSort: false,
+        disableSortBy: false,
         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (avg)`,
       },
       {

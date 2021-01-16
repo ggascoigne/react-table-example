@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   })
 )
 
-type ColumnHidePage<T extends object> = {
+type ColumnHidePageProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>
   anchorEl?: Element
   onClose: () => void
@@ -33,12 +33,12 @@ type ColumnHidePage<T extends object> = {
 
 const id = 'popover-column-hide'
 
-export function ColumnHidePage<T extends object>({
+export function ColumnHidePage<T extends Record<string, unknown>>({
   instance,
   anchorEl,
   onClose,
   show,
-}: ColumnHidePage<T>): ReactElement | null {
+}: ColumnHidePageProps<T>): ReactElement | null {
   const classes = useStyles({})
   const { allColumns, toggleHideColumn } = instance
   const hideableColumns = allColumns.filter((column) => !(column.id === '_selector'))
@@ -66,17 +66,15 @@ export function ColumnHidePage<T extends object>({
         <div className={classes.columnsPopOver}>
           <Typography className={classes.popoverTitle}>Visible Columns</Typography>
           <div className={classes.grid}>
-            {hideableColumns.map((column) => {
-              return (
-                <FormControlLabel
-                  key={column.id}
-                  control={<Checkbox value={`${column.id}`} disabled={column.isVisible && onlyOneOptionLeft} />}
-                  label={column.render('Header')}
-                  checked={column.isVisible}
-                  onChange={() => toggleHideColumn(column.id, column.isVisible)}
-                />
-              )
-            })}
+            {hideableColumns.map((column) => (
+              <FormControlLabel
+                key={column.id}
+                control={<Checkbox value={`${column.id}`} disabled={column.isVisible && onlyOneOptionLeft} />}
+                label={column.render('Header')}
+                checked={column.isVisible}
+                onChange={() => toggleHideColumn(column.id, column.isVisible)}
+              />
+            ))}
           </div>
         </div>
       </Popover>

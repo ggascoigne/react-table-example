@@ -27,16 +27,16 @@ import {
 } from 'react-table'
 
 import { camelToWords, useDebounce, useLocalStorage } from '../utils'
-import { DumpInstance } from './DumpInstance'
 import { FilterChipBar } from './FilterChipBar'
 import { fuzzyTextFilter, numericTextFilter } from './filters'
 import { ResizeHandle } from './ResizeHandle'
+import { TableDebug } from './TableDebug'
 import { TablePagination } from './TablePagination'
 import { HeaderCheckbox, RowCheckbox, useStyles } from './TableStyles'
 import { TableToolbar } from './TableToolbar'
 import { TooltipCell } from './TooltipCell'
 
-export interface Table<T extends object = {}> extends TableOptions<T> {
+export interface TableProperties<T extends Record<string, unknown>> extends TableOptions<T> {
   name: string
   onAdd?: (instance: TableInstance<T>) => MouseEventHandler
   onDelete?: (instance: TableInstance<T>) => MouseEventHandler
@@ -48,7 +48,7 @@ const DefaultHeader: React.FC<HeaderProps<any>> = ({ column }) => (
   <>{column.id.startsWith('_') ? null : camelToWords(column.id)}</>
 )
 
-function DefaultColumnFilter<T extends object>({
+function DefaultColumnFilter<T extends Record<string, unknown>>({
   column: { id, index, filterValue, setFilter, render, parent },
 }: FilterProps<T>) {
   const [value, setValue] = React.useState(filterValue || '')
@@ -76,7 +76,7 @@ function DefaultColumnFilter<T extends object>({
   )
 }
 
-const getStyles = <T extends object>(props: any, disableResizing = false, align = 'left') => [
+const getStyles = (props: any, disableResizing = false, align = 'left') => [
   props,
   {
     style: {
@@ -115,10 +115,10 @@ const selectionHook = (hooks: Hooks<any>) => {
   })
 }
 
-const headerProps = <T extends object>(props: any, { column }: Meta<T, { column: HeaderGroup<T> }>) =>
+const headerProps = <T extends Record<string, unknown>>(props: any, { column }: Meta<T, { column: HeaderGroup<T> }>) =>
   getStyles(props, column && column.disableResizing, column && column.align)
 
-const cellProps = <T extends object>(props: any, { cell }: Meta<T, { cell: Cell<T> }>) =>
+const cellProps = <T extends Record<string, unknown>>(props: any, { cell }: Meta<T, { cell: Cell<T> }>) =>
   getStyles(props, cell.column && cell.column.disableResizing, cell.column && cell.column.align)
 
 const defaultColumn = {
@@ -149,7 +149,7 @@ const filterTypes = {
   numeric: numericTextFilter,
 }
 
-export function Table<T extends object>(props: PropsWithChildren<Table<T>>): ReactElement {
+export function Table<T extends Record<string, unknown>>(props: PropsWithChildren<TableProperties<T>>): ReactElement {
   const { name, columns, onAdd, onDelete, onEdit, onClick } = props
   const classes = useStyles()
 
@@ -239,43 +239,37 @@ export function Table<T extends object>(props: PropsWithChildren<Table<T>>): Rea
                   rowSelected: row.isSelected,
                 })}
               >
-                {row.cells.map((cell) => {
-                  return (
-                    <div
-                      {...cell.getCellProps(cellProps)}
-                      onClick={cellClickHandler(cell)}
-                      className={classes.tableCell}
-                    >
-                      {cell.isGrouped ? (
-                        <>
-                          <TableSortLabel
-                            classes={{
-                              iconDirectionAsc: classes.iconDirectionAsc,
-                              iconDirectionDesc: classes.iconDirectionDesc,
-                            }}
-                            active
-                            direction={row.isExpanded ? 'desc' : 'asc'}
-                            IconComponent={KeyboardArrowUp}
-                            {...row.getToggleRowExpandedProps()}
-                            className={classes.cellIcon}
-                          />{' '}
-                          {cell.render('Cell')} ({row.subRows.length})
-                        </>
-                      ) : cell.isAggregated ? (
-                        cell.render('Aggregated')
-                      ) : cell.isPlaceholder ? null : (
-                        cell.render('Cell')
-                      )}
-                    </div>
-                  )
-                })}
+                {row.cells.map((cell) => (
+                  <div {...cell.getCellProps(cellProps)} onClick={cellClickHandler(cell)} className={classes.tableCell}>
+                    {cell.isGrouped ? (
+                      <>
+                        <TableSortLabel
+                          classes={{
+                            iconDirectionAsc: classes.iconDirectionAsc,
+                            iconDirectionDesc: classes.iconDirectionDesc,
+                          }}
+                          active
+                          direction={row.isExpanded ? 'desc' : 'asc'}
+                          IconComponent={KeyboardArrowUp}
+                          {...row.getToggleRowExpandedProps()}
+                          className={classes.cellIcon}
+                        />{' '}
+                        {cell.render('Cell')} ({row.subRows.length})
+                      </>
+                    ) : cell.isAggregated ? (
+                      cell.render('Aggregated')
+                    ) : cell.isPlaceholder ? null : (
+                      cell.render('Cell')
+                    )}
+                  </div>
+                ))}
               </div>
             )
           })}
         </div>
       </div>
       <TablePagination<T> instance={instance} />
-      <DumpInstance enabled instance={instance} />
+      <TableDebug enabled instance={instance} />
     </>
   )
 }

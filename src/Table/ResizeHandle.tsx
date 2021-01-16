@@ -1,10 +1,14 @@
 import cx from 'classnames'
-import React from 'react'
-
-import { useStyles } from './TableStyles'
+import React, { ReactElement } from 'react'
 import type { ColumnInstance } from 'react-table'
 
-export const ResizeHandle = <T extends {}>({ column }: { column: ColumnInstance<T> }) => {
+import { useStyles } from './TableStyles'
+
+export const ResizeHandle = <T extends Record<string, unknown>>({
+  column,
+}: {
+  column: ColumnInstance<T>
+}): ReactElement => {
   const classes = useStyles()
   return (
     <div

@@ -1,6 +1,4 @@
-import type { Theme } from '@material-ui/core'
-
-import { Button, IconButton, Toolbar, Tooltip, createStyles, makeStyles } from '@material-ui/core'
+import { Button, IconButton, Theme, Toolbar, Tooltip, createStyles, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/CreateOutlined'
 import DeleteIcon from '@material-ui/icons/DeleteOutline'
@@ -8,12 +6,11 @@ import FilterListIcon from '@material-ui/icons/FilterList'
 import ViewColumnsIcon from '@material-ui/icons/ViewColumn'
 import classnames from 'classnames'
 import React, { MouseEvent, MouseEventHandler, PropsWithChildren, ReactElement, useCallback, useState } from 'react'
+import { TableInstance } from 'react-table'
 
+import { TableMouseEventHandler } from '../../types/react-table-config'
 import { ColumnHidePage } from './ColumnHidePage'
 import { FilterPage } from './FilterPage'
-import type { TableInstance } from 'react-table'
-
-import type { TableMouseEventHandler } from '../../types/react-table-config'
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +37,7 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-type InstanceActionButton<T extends object> = {
+type InstanceActionButton<T extends Record<string, unknown>> = {
   instance: TableInstance<T>
   icon?: JSX.Element
   onClick: TableMouseEventHandler
@@ -49,7 +46,7 @@ type InstanceActionButton<T extends object> = {
   variant?: 'right' | 'left'
 }
 
-type ActionButton<T extends object> = {
+type ActionButton = {
   icon?: JSX.Element
   onClick: MouseEventHandler
   enabled?: boolean
@@ -57,43 +54,34 @@ type ActionButton<T extends object> = {
   variant?: 'right' | 'left'
 }
 
-export const InstanceLabeledActionButton = <T extends object>({
+export const InstanceLabeledActionButton = <T extends Record<string, unknown>>({
   instance,
   icon,
   onClick,
   label,
   enabled = () => true,
-}: InstanceActionButton<T>): ReactElement => {
-  return (
-    <Button variant='contained' color='primary' onClick={onClick(instance)} disabled={!enabled(instance)}>
-      {icon}
-      {label}
-    </Button>
-  )
-}
+}: InstanceActionButton<T>): ReactElement => (
+  <Button variant='contained' color='primary' onClick={onClick(instance)} disabled={!enabled(instance)}>
+    {icon}
+    {label}
+  </Button>
+)
 
-export const LabeledActionButton = <T extends object>({
-  icon,
-  onClick,
-  label,
-  enabled = true,
-}: ActionButton<T>): ReactElement => {
-  return (
-    <Button variant='contained' color='primary' onClick={onClick} disabled={!enabled}>
-      {icon}
-      {label}
-    </Button>
-  )
-}
+export const LabeledActionButton = ({ icon, onClick, label, enabled = true }: ActionButton): ReactElement => (
+  <Button variant='contained' color='primary' onClick={onClick} disabled={!enabled}>
+    {icon}
+    {label}
+  </Button>
+)
 
-export const InstanceSmallIconActionButton = <T extends object>({
+export const InstanceSmallIconActionButton = <T extends Record<string, unknown>>({
   instance,
   icon,
   onClick,
   label,
   enabled = () => true,
   variant,
-}: InstanceActionButton<T>) => {
+}: InstanceActionButton<T>): ReactElement => {
   const classes = useStyles({})
   return (
     <Tooltip title={label} aria-label={label}>
@@ -113,13 +101,13 @@ export const InstanceSmallIconActionButton = <T extends object>({
   )
 }
 
-export const SmallIconActionButton = <T extends object>({
+export const SmallIconActionButton = ({
   icon,
   onClick,
   label,
   enabled = true,
   variant,
-}: ActionButton<T>) => {
+}: ActionButton): ReactElement => {
   const classes = useStyles({})
   return (
     <Tooltip title={label} aria-label={label}>
@@ -139,19 +127,19 @@ export const SmallIconActionButton = <T extends object>({
   )
 }
 
-type TableToolbar<T extends object> = {
+type TableToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>
   onAdd?: TableMouseEventHandler
   onDelete?: TableMouseEventHandler
   onEdit?: TableMouseEventHandler
 }
 
-export function TableToolbar<T extends object>({
+export function TableToolbar<T extends Record<string, unknown>>({
   instance,
   onAdd,
   onDelete,
   onEdit,
-}: PropsWithChildren<TableToolbar<T>>): ReactElement | null {
+}: PropsWithChildren<TableToolbarProps<T>>): ReactElement | null {
   const { columns } = instance
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<Element | undefined>(undefined)
@@ -226,14 +214,14 @@ export function TableToolbar<T extends object>({
         <ColumnHidePage<T> instance={instance} onClose={handleClose} show={columnsOpen} anchorEl={anchorEl} />
         <FilterPage<T> instance={instance} onClose={handleClose} show={filterOpen} anchorEl={anchorEl} />
         {hideableColumns.length > 1 && (
-          <SmallIconActionButton<T>
+          <SmallIconActionButton
             icon={<ViewColumnsIcon />}
             onClick={handleColumnsClick}
             label='Show / hide columns'
             variant='right'
           />
         )}
-        <SmallIconActionButton<T>
+        <SmallIconActionButton
           icon={<FilterListIcon />}
           onClick={handleFilterClick}
           label='Filter by columns'

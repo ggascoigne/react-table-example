@@ -29,12 +29,11 @@ function camelToSnake(str: string) {
 
 function snakeToCamel(str: string) {
   const parts = str.split('_')
-  return parts.reduce(function (p, c) {
-    return p + c.charAt(0).toUpperCase() + c.slice(1)
-  }, parts.shift()!)
+  return parts.reduce((p, c) => p + c.charAt(0).toUpperCase() + c.slice(1), parts.shift()!)
 }
 
-export function toSnakeCase(object: any, exceptions: string[] = []) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function toSnakeCase(object: any, exceptions: string[] = []): any {
   if (typeof object !== 'object' || object === null) {
     return object
   }
@@ -46,7 +45,8 @@ export function toSnakeCase(object: any, exceptions: string[] = []) {
   }, {})
 }
 
-export function toCamelCase(object: any, exceptions: string[] = []) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function toCamelCase(object: any, exceptions: string[] = []): any {
   if (typeof object !== 'object' || object === null) {
     return object
   }
@@ -58,7 +58,7 @@ export function toCamelCase(object: any, exceptions: string[] = []) {
   }, {})
 }
 
-export function camelToWords(str: string) {
+export function camelToWords(str: string): string {
   let newKey = ''
   let index = 0
   let code

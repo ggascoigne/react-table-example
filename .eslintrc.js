@@ -9,8 +9,13 @@ module.exports = {
     // and the code is all being formatted on commit anyway.
   ],
   rules: {
+    'arrow-body-style': 'warn',
+    'dot-notation': 'warn',
     'no-var': 'error',
     'no-debugger': 'error',
+    'no-duplicate-imports': 'error',
+    'object-shorthand': 'warn',
+    'prefer-arrow-callback': 'warn',
     'prefer-const': 'warn',
     // In principle I like this rule, but I also want to use names such as _Foo
     // for those internal classes that get passed on to redux connect.  After
@@ -32,8 +37,8 @@ module.exports = {
         '@typescript-eslint/no-use-before-define': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/ban-ts-ignore': 'off'
-      }
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
     },
     {
       files: '*.{ts,tsx}',
@@ -45,8 +50,7 @@ module.exports = {
         '@typescript-eslint/explicit-member-accessibility': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
-        // these are somewhat open to debate but match our current code.
-        '@typescript-eslint/interface-name-prefix': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/prefer-interface': 'off',
         '@typescript-eslint/no-empty-interface': [
           'error',
@@ -55,7 +59,7 @@ module.exports = {
           }
         ],
         '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
-        '@typescript-eslint/ban-ts-ignore': 'off'
+        '@typescript-eslint/ban-ts-comment': 'off',
       }
     }
   ]

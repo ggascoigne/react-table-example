@@ -24,8 +24,3 @@ Other features:
 ## Inspiration
 
 Several parts of this demo are pulled from examples that are available at https://github.com/tannerlinsley/react-table/tree/master/examples that are copyright Tanner Linsley
-
-## Note
-
-This example uses a pre-released version of `@types/react-table` that fixes the types to support rc.16  to work with fixed width columns.  Note that this requires `patch-package` which doesn't work on `codesandbox.io`.
-

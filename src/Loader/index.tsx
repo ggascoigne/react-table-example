@@ -1,5 +1,4 @@
 import type { Theme } from '@material-ui/core'
-
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import React from 'react'
@@ -20,14 +19,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-interface Loader {
+interface LoaderProps {
   error?: boolean
   retry?: (event: React.MouseEvent<HTMLElement>) => void
   timedOut?: boolean
   pastDelay?: boolean
 }
 
-export const Loader: React.FC<Loader> = ({ error, retry, timedOut, pastDelay }) => {
+export const Loader: React.FC<LoaderProps> = ({ error, retry, timedOut, pastDelay }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>

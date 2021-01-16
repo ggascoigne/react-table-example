@@ -1,6 +1,4 @@
-import type { Theme } from '@material-ui/core'
-
-import { Checkbox, createStyles, makeStyles, styled } from '@material-ui/core'
+import { Checkbox, Theme, createStyles, makeStyles, styled } from '@material-ui/core'
 import React from 'react'
 
 export const useStyles = makeStyles((theme: Theme) =>

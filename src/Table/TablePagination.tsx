@@ -16,7 +16,7 @@ const interestingPropsEqual = (prevProps: any, nextProps: any) =>
 type T = typeof _MuiTablePagination
 const MuiTablePagination: T = React.memo(_MuiTablePagination, interestingPropsEqual) as T
 
-export function TablePagination<T extends object>({
+export function TablePagination<T extends Record<string, unknown>>({
   instance,
 }: PropsWithChildren<{ instance: TableInstance<T> }>): ReactElement | null {
   const {
