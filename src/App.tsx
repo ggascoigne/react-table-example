@@ -1,6 +1,6 @@
 import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
 import React, { useCallback } from 'react'
-import { CellProps, FilterProps, FilterValue, IdType, Row } from 'react-table'
+import { CellProps, FilterProps, FilterValue, IdType, Row, TableInstance } from 'react-table'
 
 import { Page } from './Page'
 import { Table } from './Table'
@@ -248,7 +248,15 @@ const columns = [
 const App: React.FC = () => {
   const [data] = React.useState<PersonData[]>(() => makeData(100))
 
-  const dummy = useCallback(() => () => null, [])
+  const dummy = useCallback(
+    (instance: TableInstance<PersonData>) => () => {
+      console.log(
+        'Selected',
+        instance.selectedFlatRows.map((v) => `'${v.original.firstName} ${v.original.lastName}'`).join(', ')
+      )
+    },
+    []
+  )
 
   return (
     <Page>
