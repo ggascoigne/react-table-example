@@ -6,6 +6,7 @@ import React, { CSSProperties, MouseEventHandler, PropsWithChildren, ReactElemen
 import {
   Cell,
   CellProps,
+  ColumnInstance,
   FilterProps,
   HeaderGroup,
   HeaderProps,
@@ -48,9 +49,12 @@ const DefaultHeader: React.FC<HeaderProps<any>> = ({ column }) => (
   <>{column.id.startsWith('_') ? null : camelToWords(column.id)}</>
 )
 
-function DefaultColumnFilter<T extends Record<string, unknown>>({
-  column: { id, index, filterValue, setFilter, render, parent },
-}: FilterProps<T>) {
+// yes this is recursive, but the depth never exceeds three so it seems safe enough
+const findFirstColumn = <T extends Record<string, unknown>>(columns: Array<ColumnInstance<T>>): ColumnInstance<T> =>
+  columns[0].columns ? findFirstColumn(columns[0].columns) : columns[0]
+
+function DefaultColumnFilter<T extends Record<string, unknown>>({ columns, column }: FilterProps<T>) {
+  const { id, filterValue, setFilter, render } = column
   const [value, setValue] = React.useState(filterValue || '')
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
@@ -60,13 +64,14 @@ function DefaultColumnFilter<T extends Record<string, unknown>>({
     setValue(filterValue || '')
   }, [filterValue])
 
-  const firstIndex = !(parent && parent.index)
+  const isFirstColumn = findFirstColumn(columns) === column
   return (
     <TextField
       name={id}
       label={render('Header')}
+      InputLabelProps={{ htmlFor: id }}
       value={value}
-      autoFocus={index === 0 && firstIndex}
+      autoFocus={isFirstColumn}
       variant={'standard'}
       onChange={handleChange}
       onBlur={(e) => {
