@@ -4,7 +4,7 @@ module.exports = {
     // enable typescript support
     'plugin:@typescript-eslint/recommended',
     // now disable all of the rules that are in conflict with prettier
-    'prettier/@typescript-eslint'
+    'prettier'
     // note that we don't add the prettier rules, they add noise to the IDE
     // and the code is all being formatted on commit anyway.
   ],
