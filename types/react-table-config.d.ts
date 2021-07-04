@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
 import {
   TableInstance,
   UseColumnOrderInstanceProps,
@@ -116,6 +116,19 @@ declare module 'react-table' {
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D> {}
+
+  export interface TableCommonProps {
+    title?: string
+    'aria-label'?: string
+  }
+
+  export interface TableSortByToggleProps {
+    title?: string
+  }
+
+  export interface TableGroupByToggleProps {
+    title?: string
+  }
 }
 
 export type TableMouseEventHandler = (instance: TableInstance<T>) => MouseEventHandler

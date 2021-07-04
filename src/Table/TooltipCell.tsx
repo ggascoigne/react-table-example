@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core'
+import { Tooltip as MuiTooltip, makeStyles } from '@material-ui/core'
 import React, { CSSProperties } from 'react'
 import { CellProps } from 'react-table'
 
@@ -10,8 +10,8 @@ const useStyles = makeStyles({
   },
 })
 
-export const TooltipCell: React.FC<CellProps<any>> = ({ cell: { value }, column: { align = 'left' } }) => (
-  <Tooltip text={value} align={align} />
+export const TooltipCellRenderer: React.FC<CellProps<any>> = ({ cell: { value }, column: { align = 'left' } }) => (
+  <TooltipCell text={value} align={align} />
 )
 
 interface TooltipProps {
@@ -20,11 +20,11 @@ interface TooltipProps {
   align: string
 }
 
-export const Tooltip: React.FC<TooltipProps> = ({ text, tooltip = text, align }) => {
+export const TooltipCell: React.FC<TooltipProps> = ({ text, tooltip = text, align }) => {
   const classes = useStyles({})
   return (
-    <div className={classes.truncated} style={{ textAlign: align } as CSSProperties}>
-      <span title={tooltip}>{text}</span>
-    </div>
+    <MuiTooltip title={tooltip} className={classes.truncated} style={{ textAlign: align } as CSSProperties}>
+      <span>{text}</span>
+    </MuiTooltip>
   )
 }
