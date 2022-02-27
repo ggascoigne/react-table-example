@@ -127,8 +127,8 @@ export function TablePagination<T extends Record<string, unknown>>({
         inputProps: { 'aria-label': 'rows per page' },
         // native: true,
       }}
-      onChangePage={handleChangePage}
-      onChangeRowsPerPage={onChangeRowsPerPage}
+      onPageChange={handleChangePage}
+      onRowsPerPageChange={onChangeRowsPerPage}
       ActionsComponent={TablePaginationActions}
     />
   ) : null

@@ -28,7 +28,7 @@ function parseValue(filterValue: FilterValue) {
 
 export function numericTextFilter<T extends Record<string, unknown>>(
   rows: Array<Row<T>>,
-  id: IdType<T>,
+  id: Array<IdType<T>>,
   filterValue: FilterValue
 ): Array<Row<T>> {
   const comparator = parseValue(filterValue)
