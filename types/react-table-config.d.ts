@@ -112,7 +112,7 @@ declare module 'react-table' {
 
   export interface Cell<D extends Record<string, unknown> = Record<string, unknown>> extends UseGroupByCellProps<D> {}
 
-  export interface Row<D extends object = {}>
+  export interface Row<D extends Record<string, unknown> = Record<string, unknown>>
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D> {}
@@ -131,4 +131,4 @@ declare module 'react-table' {
   }
 }
 
-export type TableMouseEventHandler = (instance: TableInstance<T>) => MouseEventHandler
+export type TableMouseEventHandler<T extends Record<string, unknown>> = (instance: TableInstance<T>) => MouseEventHandler

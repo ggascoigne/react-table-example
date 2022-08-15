@@ -1,8 +1,8 @@
-import { TableSortLabel, TextField, Tooltip } from '@material-ui/core'
+import {TableSortLabel, TextField, Tooltip} from '@material-ui/core'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import cx from 'classnames'
-import React, { CSSProperties, MouseEventHandler, PropsWithChildren, ReactElement, useEffect } from 'react'
+import React, {CSSProperties, MouseEventHandler, PropsWithChildren, ReactElement, useEffect} from 'react'
 import {
   Cell,
   CellProps,
@@ -27,12 +27,12 @@ import {
   useTable,
 } from 'react-table'
 
-import { camelToWords, useDebounce, useLocalStorage } from '../utils'
-import { FilterChipBar } from './FilterChipBar'
-import { fuzzyTextFilter, numericTextFilter } from './filters'
-import { ResizeHandle } from './ResizeHandle'
-import { TableDebug } from './TableDebug'
-import { TablePagination } from './TablePagination'
+import {camelToWords, useDebounce, useLocalStorage} from '../utils'
+import {FilterChipBar} from './FilterChipBar'
+import {fuzzyTextFilter, numericTextFilter} from './filters'
+import {ResizeHandle} from './ResizeHandle'
+import {TableDebug} from './TableDebug'
+import {TablePagination} from './TablePagination'
 import {
   HeaderCheckbox,
   RowCheckbox,
@@ -46,8 +46,8 @@ import {
   TableTable,
   useStyles,
 } from './TableStyles'
-import { TableToolbar } from './TableToolbar'
-import { TooltipCellRenderer } from './TooltipCell'
+import {TableToolbar} from './TableToolbar'
+import {TooltipCellRenderer} from './TooltipCell'
 
 export interface TableProperties<T extends Record<string, unknown>> extends TableOptions<T> {
   name: string
@@ -57,11 +57,11 @@ export interface TableProperties<T extends Record<string, unknown>> extends Tabl
   onClick?: (row: Row<T>) => void
 }
 
-const DefaultHeader: React.FC<HeaderProps<any>> = ({ column }) => (
+const DefaultHeader = <T extends Record<string, unknown>> ({ column }:HeaderProps<T>) => (
   <>{column.id.startsWith('_') ? null : camelToWords(column.id)}</>
 )
 
-// yes this is recursive, but the depth never exceeds three so it seems safe enough
+// yes this is recursive, but the depth never exceeds three, so it seems safe enough
 const findFirstColumn = <T extends Record<string, unknown>>(columns: Array<ColumnInstance<T>>): ColumnInstance<T> =>
   columns[0].columns ? findFirstColumn(columns[0].columns) : columns[0]
 

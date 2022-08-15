@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type PageProps = {
   className?: string
+  children?: React.ReactNode
 }
 
 export const Page: React.FC<PageProps> = ({ children, className }) => {

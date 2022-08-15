@@ -134,7 +134,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 const areEqual = (prevProps: any, nextProps: any) =>
   prevProps.checked === nextProps.checked && prevProps.indeterminate === nextProps.indeterminate
 
-type CN = { className?: string; style?: CSSProperties }
+type CN = { className?: string; style?: CSSProperties, children?: React.ReactNode }
 
 export const TableTable: React.FC<Partial<TableTypeMap> & CN> = ({ children, className, ...rest }) => {
   const classes = useStyles()

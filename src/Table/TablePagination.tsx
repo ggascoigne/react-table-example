@@ -1,12 +1,12 @@
-import { TablePagination as _MuiTablePagination } from '@material-ui/core'
+import {TablePagination as _MuiTablePagination} from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
-import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles'
+import {createStyles, makeStyles, Theme, useTheme} from '@material-ui/core/styles'
 import FirstPageIcon from '@material-ui/icons/FirstPage'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPageIcon from '@material-ui/icons/LastPage'
-import React, { PropsWithChildren, ReactElement, useCallback } from 'react'
-import { TableInstance } from 'react-table'
+import React, {PropsWithChildren, ReactElement, useCallback} from 'react'
+import {TableInstance} from 'react-table'
 
 const rowsPerPageOptions = [10, 25, 50]
 
@@ -110,8 +110,8 @@ export function TablePagination<T extends Record<string, unknown>>({
   )
 
   const onChangeRowsPerPage = useCallback(
-    (e) => {
-      setPageSize(Number(e.target.value))
+    (e:  React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | undefined) => {
+      e && setPageSize(Number(e.target.value))
     },
     [setPageSize]
   )

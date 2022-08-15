@@ -40,7 +40,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 type InstanceActionButton<T extends Record<string, unknown>> = {
   instance: TableInstance<T>
   icon?: JSX.Element
-  onClick: TableMouseEventHandler
+  onClick: TableMouseEventHandler<T>
   enabled?: (instance: TableInstance<T>) => boolean
   label: string
   variant?: 'right' | 'left'
@@ -129,9 +129,9 @@ export const SmallIconActionButton = ({
 
 type TableToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>
-  onAdd?: TableMouseEventHandler
-  onDelete?: TableMouseEventHandler
-  onEdit?: TableMouseEventHandler
+  onAdd?: TableMouseEventHandler<T>
+  onDelete?: TableMouseEventHandler<T>
+  onEdit?: TableMouseEventHandler<T>
 }
 
 export function TableToolbar<T extends Record<string, unknown>>({
