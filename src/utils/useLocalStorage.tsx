@@ -1,12 +1,12 @@
 // credits to https://usehooks.com/useLocalStorage/
 
+import { dequal as deepEqual } from 'dequal'
 import { useCallback, useState } from 'react'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function useLocalStorage(key: string, initialValue: any) {
+export function useLocalStorage<T = any>(key: string, initialValue: T): [T, (value: T) => void] {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState(() => {
+  const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       // Get from local storage by key
       const item = window.localStorage.getItem(key)
@@ -22,18 +22,20 @@ export function useLocalStorage(key: string, initialValue: any) {
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
   const setValue = useCallback(
-    (value: any) => {
+    (value: T) => {
       try {
-        // Save state
-        setStoredValue(value)
-        // Save to local storage
-        window.localStorage.setItem(key, JSON.stringify(value))
+        if (!deepEqual(storedValue, value)) {
+          // Save state
+          setStoredValue(value)
+          // Save to local storage
+          window.localStorage.setItem(key, JSON.stringify(value))
+        }
       } catch (error) {
         // A more advanced implementation would handle the error case
         console.log(error)
       }
     },
-    [key]
+    [key, storedValue]
   )
 
   return [storedValue, setValue]

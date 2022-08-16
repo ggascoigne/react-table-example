@@ -1,4 +1,4 @@
-import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@material-ui/core'
+import { Button, CssBaseline, InputLabel, MenuItem, TextField } from '@mui/material'
 import React, { useCallback } from 'react'
 import { CellProps, FilterProps, FilterValue, IdType, Row, TableInstance } from 'react-table'
 
@@ -53,6 +53,7 @@ function SelectColumnFilter({
       onChange={(e) => {
         setFilter(e.target.value || undefined)
       }}
+      variant='standard'
     >
       <MenuItem value={''}>All</MenuItem>
       {options.map((option, i) => (
@@ -84,7 +85,7 @@ function SliderColumnFilter({
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'baseline',
+        alignItems: 'center',
       }}
     >
       <TextField
@@ -99,6 +100,7 @@ function SliderColumnFilter({
         onChange={(e) => {
           setFilter(parseInt(e.target.value, 10))
         }}
+        variant='standard'
       />
       <Button variant='outlined' style={{ width: 60, height: 36 }} onClick={() => setFilter(undefined)}>
         Off
@@ -159,6 +161,7 @@ function NumberRangeColumnFilter({
             width: '70px',
             marginRight: '0.5rem',
           }}
+          variant='standard'
         />
         to
         <TextField
@@ -174,6 +177,7 @@ function NumberRangeColumnFilter({
             width: '70px',
             marginLeft: '0.5rem',
           }}
+          variant='standard'
         />
       </div>
     </>
